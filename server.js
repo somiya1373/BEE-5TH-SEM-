@@ -1,17 +1,25 @@
-const express = require('express');
-const app = express();
-const port = 3000;
-
-//express.static(__dirname + '/public');
+const express=require('express');
+const app=express();
+const fs=require("fs");
 app.use(express.static(__dirname+"/public"));
-//app.use(express.json());
-// app.get('/', (req, res) => {
-//  res.sendFile(__dirname + '/index.html');
-//  // res.sendFile(__dirname + './index.html');
-// });
-// app.get('/about', (req, res) => {
-//  res.sendFile(__dirname + '/about.html'); 
-// });
-app.listen(port, () => {
-  console.log(`Server is running on http://localhost:${port}`);
-});
+app.get("/",(req,res)=>{
+    res.send("server started");
+})
+
+app.get("/users",(req,res)=>{
+    fs.readFile("./users.json","utf-8",function(err,data){
+        if(err) res.send(err);
+        let allUsers=JSON.parse(data);
+        res.json(allUsers);
+    })
+})
+app.listen(3000,()=>{
+    console.log("Server started");
+})
+
+
+
+
+
+
+// create a frontend to add user in to file.
